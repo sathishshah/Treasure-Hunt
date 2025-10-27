@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KKT Treasure Hunt</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Simple blinking caret for the title */
         .caret {
@@ -14,66 +12,249 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+        
+        /* Inline CSS for styling */
+        body {
+            background-color: #111827;
+            color: #4ade80;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .container {
+            background-color: #000;
+            border: 2px solid #22c55e;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 32rem;
+            position: relative;
+            margin-top: 1rem;
+        }
+        
+        .title-bar {
+            position: absolute;
+            top: -1rem;
+            left: 0;
+            right: 0;
+            padding: 0 1rem;
+        }
+        
+        .title-bar-content {
+            background-color: #374151;
+            border: 2px solid #22c55e;
+            color: #4ade80;
+            text-align: center;
+            padding: 0.25rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            font-size: 0.875rem;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .intro {
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .error {
+            color: #facc15;
+        }
+        
+        #message-box {
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .key-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .key-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            h1 {
+                font-size: 1.875rem;
+            }
+            .intro {
+                font-size: 1rem;
+            }
+            .container {
+                padding: 2rem;
+            }
+        }
+        
+        .key-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+        
+        input {
+            width: 100%;
+            background-color: #1f2937;
+            border: 1px solid #16a34a;
+            color: #fff;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+        }
+        
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #22c55e;
+        }
+        
+        button {
+            margin-top: 2rem;
+            width: 100%;
+            background-color: #16a34a;
+            color: #000;
+            font-weight: bold;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background-color: #22c55e;
+        }
+        
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #4ade80;
+        }
+        
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        input:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .bg-red-900 {
+            background-color: #7f1d1d;
+        }
+        
+        .text-red-300 {
+            color: #fca5a5;
+        }
+        
+        .bg-green-800 {
+            background-color: #166534;
+        }
+        
+        .text-green-300 {
+            color: #86efac;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        
+        .text-base {
+            font-size: 1rem;
+        }
+        
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+        
+        .font-bold {
+            font-weight: bold;
+        }
+        
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-green-400 font-mono min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <div class="bg-black border-2 border-green-500 p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-lg relative">
+    <div class="container">
         <!-- Title Bar -->
-        <div class="absolute -top-4 left-0 right-0 px-4">
-            <div class="bg-gray-700 border-2 border-green-500 text-green-400 text-center py-1 rounded-t-lg">
+        <div class="title-bar">
+            <div class="title-bar-content">
                 UCEK TERMINAL :: KKT_APP-OCALYPSE_v4.0
             </div>
         </div>
 
-        <h1 class="text-xl sm:text-2xl font-bold mb-4 text-center text-white">
+        <h1>
             > KKT APP-OCALYPSE <span class="caret">_</span>
         </h1>
-        <p class="mb-6 text-sm sm:text-base">
-            <span class="text-yellow-400">[ERROR]</span> College Wi-Fi is down. Rogue AI detected.
+        <p class="intro">
+            <span class="error">[ERROR]</span> College Wi-Fi is down. Rogue AI detected.
             <br>
             To find the treasure, you must find 7 'Pass-Fragments' (Keys) by visiting the 7 Hotspots in the Academic Building.
         </p>
 
         <!-- Message Box for success/error -->
-        <div id="message-box" class="hidden p-3 rounded-md mb-4 text-center font-bold"></div>
+        <div id="message-box" class="hidden"></div>
 
         <!-- Input Fields for Keys -->
-        <div class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label for="key1" class="block text-xs uppercase mb-1">Pass-Fragment_01:</label>
-                    <input type="text" id="key1" name="key1" class="w-full bg-gray-800 border border-green-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
-                </div>
-                <div>
-                    <label for="key2" class="block text-xs uppercase mb-1">Pass-Fragment_02:</label>
-                    <input type="text" id="key2" name="key2" class="w-full bg-gray-800 border border-green-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
-                </div>
-                <div>
-                    <label for="key3" class="block text-xs uppercase mb-1">Pass-Fragment_03:</label>
-                    <input type="text" id="key3" name="key3" class="w-full bg-gray-800 border border-green-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
-                </div>
-                <div>
-                    <label for="key4" class="block text-xs uppercase mb-1">Pass-Fragment_04:</label>
-                    <input type="text" id="key4" name="key4" class="w-full bg-gray-800 border border-green-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
-                </div>
-                <div>
-                    <label for="key5" class="block text-xs uppercase mb-1">Pass-Fragment_05:</label>
-                    <input type="text" id="key5" name="key5" class="w-full bg-gray-800 border border-green-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
-                </div>
-                <div>
-                    <label for="key6" class="block text-xs uppercase mb-1">Pass-Fragment_06:</label>
-                    <input type="text" id="key6" name="key6" class="w-full bg-gray-800 border border-green-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
-                </div>
+        <div class="key-container">
+            <div class="key-group">
+                <label for="key1">Pass-Fragment_01:</label>
+                <input type="text" id="key1" name="key1" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
             </div>
-            <div>
-                <label for="key7" class="block text-xs uppercase mb-1">Pass-Fragment_07 (Final):</label>
-                <input type="text" id="key7" name="key7" class="w-full bg-gray-800 border border-green-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
+            <div class="key-group">
+                <label for="key2">Pass-Fragment_02:</label>
+                <input type="text" id="key2" name="key2" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
+            </div>
+            <div class="key-group">
+                <label for="key3">Pass-Fragment_03:</label>
+                <input type="text" id="key3" name="key3" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
+            </div>
+            <div class="key-group">
+                <label for="key4">Pass-Fragment_04:</label>
+                <input type="text" id="key4" name="key4" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
+            </div>
+            <div class="key-group">
+                <label for="key5">Pass-Fragment_05:</label>
+                <input type="text" id="key5" name="key5" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
+            </div>
+            <div class="key-group">
+                <label for="key6">Pass-Fragment_06:</label>
+                <input type="text" id="key6" name="key6" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
+            </div>
+            <div class="key-group">
+                <label for="key7">Pass-Fragment_07 (Final):</label>
+                <input type="text" id="key7" name="key7" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase;">
             </div>
         </div>
 
         <!-- Decrypt Button -->
-        <button id="decrypt-button" class="mt-8 w-full bg-green-600 text-black font-bold py-3 px-4 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black transition-all duration-200">
+        <button id="decrypt-button">
             RESTORE WI-FI
         </button>
     </div>
