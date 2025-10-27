@@ -135,14 +135,27 @@
             padding-right: 2rem;
         }
         
+        input.wrong {
+            border-color: #dc2626;
+            background-color: #7f1d1d;
+            padding-right: 2rem;
+        }
+        
         .checkmark {
             position: absolute;
             right: 0.5rem;
-            color: #22c55e;
             font-size: 1.25rem;
             font-weight: bold;
             opacity: 0;
             transition: opacity 0.3s;
+        }
+        
+        .checkmark.correct {
+            color: #22c55e;
+        }
+        
+        .checkmark.wrong {
+            color: #dc2626;
         }
         
         .checkmark.show {
@@ -257,49 +270,49 @@
                 <label for="key1">Pass-Fragment_01:</label>
                 <div class="input-wrapper">
                     <input type="text" id="key1" name="key1" oninput="this.value = this.value.toUpperCase(); validateKey('key1')" style="text-transform: uppercase;">
-                    <span class="checkmark" id="check1">✓</span>
+                    <span class="checkmark" id="check1"></span>
                 </div>
             </div>
             <div class="key-group">
                 <label for="key2">Pass-Fragment_02:</label>
                 <div class="input-wrapper">
                     <input type="text" id="key2" name="key2" oninput="this.value = this.value.toUpperCase(); validateKey('key2')" style="text-transform: uppercase;">
-                    <span class="checkmark" id="check2">✓</span>
+                    <span class="checkmark" id="check2"></span>
                 </div>
             </div>
             <div class="key-group">
                 <label for="key3">Pass-Fragment_03:</label>
                 <div class="input-wrapper">
                     <input type="text" id="key3" name="key3" oninput="this.value = this.value.toUpperCase(); validateKey('key3')" style="text-transform: uppercase;">
-                    <span class="checkmark" id="check3">✓</span>
+                    <span class="checkmark" id="check3"></span>
                 </div>
             </div>
             <div class="key-group">
                 <label for="key4">Pass-Fragment_04:</label>
                 <div class="input-wrapper">
                     <input type="text" id="key4" name="key4" oninput="this.value = this.value.toUpperCase(); validateKey('key4')" style="text-transform: uppercase;">
-                    <span class="checkmark" id="check4">✓</span>
+                    <span class="checkmark" id="check4"></span>
                 </div>
             </div>
             <div class="key-group">
                 <label for="key5">Pass-Fragment_05:</label>
                 <div class="input-wrapper">
                     <input type="text" id="key5" name="key5" oninput="this.value = this.value.toUpperCase(); validateKey('key5')" style="text-transform: uppercase;">
-                    <span class="checkmark" id="check5">✓</span>
+                    <span class="checkmark" id="check5"></span>
                 </div>
             </div>
             <div class="key-group">
                 <label for="key6">Pass-Fragment_06:</label>
                 <div class="input-wrapper">
                     <input type="text" id="key6" name="key6" oninput="this.value = this.value.toUpperCase(); validateKey('key6')" style="text-transform: uppercase;">
-                    <span class="checkmark" id="check6">✓</span>
+                    <span class="checkmark" id="check6"></span>
                 </div>
             </div>
             <div class="key-group">
                 <label for="key7">Pass-Fragment_07 (Final):</label>
                 <div class="input-wrapper">
                     <input type="text" id="key7" name="key7" oninput="this.value = this.value.toUpperCase(); validateKey('key7')" style="text-transform: uppercase;">
-                    <span class="checkmark" id="check7">✓</span>
+                    <span class="checkmark" id="check7"></span>
                 </div>
             </div>
         </div>
@@ -337,13 +350,28 @@
             const correctValue = correctKeys[keyId];
             
             if (userValue === correctValue) {
+                // Correct - show green checkmark
+                input.classList.remove('wrong');
                 input.classList.add('correct');
+                checkmark.textContent = '✓';
+                checkmark.classList.add('correct');
+                checkmark.classList.remove('wrong');
                 checkmark.classList.add('show');
                 input.disabled = true;
                 checkAllComplete();
-            } else {
+            } else if (userValue.length > 0 && userValue !== correctValue) {
+                // Wrong - show red X
                 input.classList.remove('correct');
-                checkmark.classList.remove('show');
+                input.classList.add('wrong');
+                checkmark.textContent = '✗';
+                checkmark.classList.add('wrong');
+                checkmark.classList.remove('correct');
+                checkmark.classList.add('show');
+                input.disabled = false;
+            } else {
+                // Empty - hide both
+                input.classList.remove('correct', 'wrong');
+                checkmark.classList.remove('show', 'correct', 'wrong');
                 input.disabled = false;
             }
         }
